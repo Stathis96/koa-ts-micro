@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2017",
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "incremental": true,
+    "baseUrl": "."
+  },
+  "paths": {
+    "src/*": ["./src/*"],
+    "tests/*": ["./tests/*"]
+  },
+  "include": [
+    "./migrations/**/*.ts",
+    "./src/**/*.ts",
+    "./tests/**/*.ts", 
+    "mikro-orm.config.ts"  
+],
+  "exclude": ["node_modules"]
+}
