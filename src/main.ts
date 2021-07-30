@@ -9,6 +9,8 @@ import { bookRouter } from './routes/books';
 import { authorRouter } from './routes/author';
 import { Author } from './entities/Author';
 import { Book } from './entities/Book';
+import { BookTag } from './entities/BookTag';
+import { bookTagRouter } from './routes/booktag';
 
 
 export const DI = {} as {
@@ -16,6 +18,7 @@ export const DI = {} as {
   em: EntityManager,
    authorRepository: EntityRepository<Author>,
    bookRepository: EntityRepository<Book>,
+   bookTagRepository: EntityRepository<BookTag>
 };
 
 export const app = new Koa();
@@ -34,12 +37,15 @@ app.use(bookRouter.routes())
 app.use(authorRouter.routes())
   .use(authorRouter.allowedMethods())
 
+ app.use(bookTagRouter.routes())
+  .use(bookTagRouter.allowedMethods()) 
+
 ;(async () => {
   DI.orm = await MikroORM.init(); // CLI config will be used automatically
   DI.em = DI.orm.em;
    DI.authorRepository = DI.orm.em.getRepository(Author);
    DI.bookRepository = DI.orm.em.getRepository(Book);
-
+   DI.bookTagRepository = DI.orm.em.getRepository(BookTag);
   
   app.use((ctx, next) => RequestContext.createAsync(DI.orm.em, next));
 
